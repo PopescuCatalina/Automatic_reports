@@ -1,0 +1,13 @@
+{
+    "cron": "0 7 * * ? *",
+    "query": "SELECT DATE(TIMESTAMP) AS `Data`, COUNT(1) AS `numar comenzi`, SUM(sub30)/COUNT(1) AS `sub 30m`, (SUM(sub45) - SUM(sub30))/COUNT(1) AS `30m - 45m`, (SUM(sub60) - SUM(sub45))/COUNT(1) AS `45m - 60m`, (SUM(sub90) - SUM(sub60))/COUNT(1) AS `60m - 90m`, SUM(peste90)/COUNT(1) AS `peste 90m` FROM (SELECT o.id, o.account_id, o.client_time, o.delivery_time, o.timestamp, TIMESTAMPDIFF(MINUTE, o.timestamp, o.delivery_time) AS late, CASE WHEN TIMESTAMPDIFF(MINUTE, o.timestamp, o.delivery_time)<30 THEN 1 ELSE 0 END AS sub30, CASE WHEN TIMESTAMPDIFF(MINUTE, o.timestamp, o.delivery_time)<45 THEN 1 ELSE 0 END AS sub45, CASE WHEN TIMESTAMPDIFF(MINUTE, o.timestamp, o.delivery_time)<60 THEN 1 ELSE 0 END AS sub60, CASE WHEN TIMESTAMPDIFF(MINUTE, o.timestamp, o.delivery_time)<=90 THEN 1 ELSE 0 END AS sub90, CASE WHEN TIMESTAMPDIFF(MINUTE, o.timestamp, o.delivery_time)>90 THEN 1 ELSE 0 END AS peste90 FROM del_orders o WHERE date(TIMESTAMP) = date(subdate(CURRENT_DATE, 1)) AND o.account_id NOT IN (10,12,14,18,21) AND delivery_time IS NOT null AND DATE(o.timestamp)=DATE(o.delivery_time) AND o.STATUS=4)a GROUP BY DATE(TIMESTAMP)",
+    "emailSubject": "Raport SLA zilnic",
+    "emailText": "Buna Cristina, \nAtasez in mail raportul pentru astazi! \n\n Zi faina!",
+    "emailTo": "",
+    "emailCC": "",
+    "databaseURL": "aurora-cluster-xdelivery-apps-prod-xdelivery-0.c1n17tjsfdmd.eu-central-1.rds.amazonaws.com",
+    "databaseUser": "user_application_xdelivery",
+    "databasePass": "xdelivery_123@",
+    "database": "xdelivery"
+  }
+  

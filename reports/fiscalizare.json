@@ -1,0 +1,12 @@
+{
+  "cron": "0 7 * * ? *",
+  "query": "SELECT * FROM (SELECT v.name , v.send_shipping_invoice, IF( (  v.name LIKE 'Yves Rocher%' OR v.name LIKE 'Sensiblu%' OR v.name LIKE 'Dr.Max%' OR v.name LIKE 'Kaufland%' OR v.name LIKE 'DM%' OR v.name LIKE 'Decathlon%' OR v.name LIKE 'Hard Rock%' OR v.name LIKE 'Carturesti%' OR v.name LIKE 'Paul%' OR v.name LIKE 'McDonald%'), IF(v.send_shipping_invoice = 1 , 'Corect','Gresit') , IF(v.send_shipping_invoice = 0 , 'Corect','Gresit')) AS 'Status' FROM del_venues v WHERE (v.name LIKE 'Yves Rocher%' OR v.name LIKE 'Sensiblu%' OR v.name LIKE 'Dr.Max%' OR v.name LIKE 'Kaufland%' OR v.name LIKE 'DM%' OR v.name LIKE 'Decathlon%' OR v.name LIKE 'Hard Rock%' OR v.name LIKE 'Carturesti%' OR v.name LIKE 'Paul%' OR v.name LIKE 'McDonald%' OR v.name LIKE 'KFC%' OR v.name LIKE 'Taco %' OR v.name LIKE 'Pizza Hut%' OR v.name LIKE 'Mega Image%') AND EXISTS ( Select * From del_orders o WHERE o.venue_id = v.id AND  o.timestamp > DATE_SUB(NOW(), INTERVAL 14 DAY) LIMIT 1)  GROUP BY v.name) sel WHERE sel.Status LIKE 'Gresit'",
+  "emailSubject": "Raport Fiscalizare",
+  "emailText": "Today's report about restaurant taxation! \n Catalina",
+  "emailTo": "",
+  "emailCC": "",
+  "databaseURL": "aurora-cluster-xdelivery-apps-prod-xdelivery-0.c1n17tjsfdmd.eu-central-1.rds.amazonaws.com",
+  "databaseUser": "user_application_xdelivery",
+  "databasePass": "xdelivery_123@",
+  "database": "xdelivery"
+}

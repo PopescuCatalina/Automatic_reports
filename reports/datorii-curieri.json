@@ -1,0 +1,12 @@
+{
+    "cron": "0 5 * * ? *",
+    "query": "SELECT u.name AS `Curier`, ug.name AS `Filiala`, ca.name AS `Agentie`, a.name AS `Cluster`, c.name AS `Oras`, u.last_online AS `Ultima activare`, u.money_balance AS `Datorie totala`, (SELECT max(sccc.timestamp) FROM del2_selfpay_courier_cash_collected sccc WHERE sccc.courier_id=u.id) AS `Data ultimei datorii` FROM del_users u, del_users_groups ug, del2_courier_agency ca, del_accounts a, del2_city c WHERE u.group_id=ug.id AND ug.courier_agency_id=ca.id AND u.account_id=a.id AND u.city_id=c.id AND a.id NOT IN (14) AND u.money_balance<-1 ORDER BY u.money_balance",
+    "emailSubject": "Datorii Curieri",
+    "emailText": "Hello, \nRaportul este atasat in mail! \n\n Zi faina!",
+    "emailTo": "Financiar@tazz.ro , catalina.chirita@tazz.ro",
+    "emailCC": "",
+    "databaseURL": "aurora-cluster-xdelivery-apps-prod-xdelivery-0.c1n17tjsfdmd.eu-central-1.rds.amazonaws.com",
+    "databaseUser": "user_application_xdelivery",
+    "databasePass": "xdelivery_123@",
+    "database": "xdelivery"
+  }

@@ -1,0 +1,13 @@
+{
+  "cron": "*/10 6-8 * * ? *",
+  "isHealthCheckRule": true,
+  "query": "",
+  "emailSubject": "[Scheduled Reports] Warming up",
+  "emailText": "The scheduled reports function has been warmed-up \n All good for now",
+  "emailTo": "catalina.chirita@tazz.ro, robert.colca@tazz.ro",
+  "emailCC": "robert.colca@tazz.ro",
+  "databaseURL": "aurora-cluster-xdelivery-apps-prod-xdelivery-0.c1n17tjsfdmd.eu-central-1.rds.amazonaws.com",
+  "databaseUser": "user_application_xdelivery",
+  "databasePass": "xdelivery_123@",
+  "database": "xdelivery"
+}

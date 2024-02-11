@@ -1,0 +1,12 @@
+{
+    "cron": "0 5 * * ? *",
+    "query": "SELECT c.id, c.added,c.email, c.benefits FROM food_clients AS c WHERE c.benefits LIKE ('%emag%') ORDER BY 2",
+    "emailSubject": "Benefits on Emag",
+    "emailText": "Hello, \nRaportul este atasat in mail! \n\n Zi faina!",
+    "emailTo": "vasile.caldarus@tazz.ro, catalina.chirita@tazz.ro",
+    "emailCC": "",
+    "databaseURL": "aurora-cluster-tazz-apps-prod-all.cluster-ro-c1n17tjsfdmd.eu-central-1.rds.amazonaws.com",
+    "databaseUser": "user_application_tazz",
+    "databasePass": "tazz_123@",
+    "database": "tazz"
+  }

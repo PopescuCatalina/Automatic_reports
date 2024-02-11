@@ -1,0 +1,12 @@
+{
+  "cron": "0 7 * * ? *",
+  "query": "SELECT u.id AS 'ID', u.name AS 'Name', u.`type` AS 'Type', DATE(u.timestamp) AS 'Registration Date', SUM(cwh.orders_delivered) AS 'Orders', ag.name AS 'Angency', a.name AS 'Account' FROM del2_courier_work_hours cwh , del_users u , del_users_groups ug , del_accounts a , del2_courier_agency ag WHERE cwh.courier_id = u.id AND u.group_id = ug.id AND ug.account_id = a.id AND ug.courier_agency_id= ag.id AND DATE(u.timestamp)>= DATE_SUB(NOW(), INTERVAL 7 DAY) AND DATE(u.timestamp)<= NOW() AND DATE(cwh.activate_requested_time)>= DATE_SUB(NOW(), INTERVAL 14 DAY) AND DATE(cwh.activate_requested_time)<= NOW() GROUP BY u.id ORDER BY u.timestamp",
+  "emailSubject": "Last week's report on new couriers",
+  "emailText": "Hello,\nToday's report about last week's report on new couriers!\n Chirita Catalina",
+  "emailTo": "catalina.chirita@tazz.ro,laurentiu.ilie@tazz.ro",
+  "emailCC": "",
+  "databaseURL": "aurora-cluster-xdelivery-apps-prod-xdelivery-1-cluster.cluster-ro-c1n17tjsfdmd.eu-central-1.rds.amazonaws.com",
+  "databaseUser": "user_application_xdelivery",
+  "databasePass": "xdelivery_123@",
+  "database": "xdelivery"
+}

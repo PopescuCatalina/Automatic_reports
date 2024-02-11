@@ -1,0 +1,12 @@
+{
+  "cron": "0 7 * * ? *",
+  "query": "SELECT food_cities.geoip_name AS accounts_city_name, accounts.name AS partner_name, accounts.company, accounts.id AS partner_id, accounts.real_rating AS partner_rating, orders.status AS order_status, orders.client_id AS order_client_id, orders.client_email AS order_client_email,  orders.delivery_cost,  orders.subtotal, orders.discount, orders.total, orders.delivered, orders.mobile_platform, orders.payment_type,  menu.id AS menu_id,  menu.order_id AS menu_order_id,  menu.client_id,  menu.menu_id,  menu.title, menu.price, menu.qty, menu.total, orders.commission, orders.ecm_id, orders.delivered FROM food_order_menu AS menu JOIN food_orders AS orders ON orders.id=menu.order_id JOIN food_accounts AS accounts ON accounts.id = orders.account_id JOIN food_cities ON food_cities.id=accounts.city_id WHERE date(orders.delivered) >= DATE_SUB(NOW(), INTERVAL 7 DAY) and date(orders.delivered) < NOW() and orders.`status` IN ('3') and accounts.name REGEXP ('Decathlon|McDonald|KFC|Pizza Hut|Taco Bell|Necenzzurat|kaufland|mega image|bat|pmt') ORDER BY 13",
+  "emailSubject": "Raport saptamanal",
+  "emailText": "Hello, am atasat raportul in mail! \n Chirita Catalina",
+  "emailTo": "vasile.caldarus@tazz.ro, catalina.chirita@tazz.ro",
+  "emailCC": "",
+  "databaseURL": "aurora-cluster-tazz-apps-prod-all.cluster-ro-c1n17tjsfdmd.eu-central-1.rds.amazonaws.com",
+  "databaseUser": "user_application_tazz",
+  "databasePass": "tazz_123@",
+  "database": "tazz"
+}
