@@ -1,0 +1,39 @@
+image: atlassian/default-image:2
+
+pipelines:
+  default:
+    - step:
+        name: Build and package
+        script:
+          - apt-get update && apt-get install -y zip
+          - zip -r code.zip *
+        artifacts:
+          - code.zip
+    - step:
+        name: Update xDeliveryRunScheduledReports Lambda code
+        script:
+          - pipe: atlassian/aws-lambda-deploy:0.2.1
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              FUNCTION_NAME: 'xDeliveryRunScheduledReports'
+              COMMAND: 'update'
+              ZIP_FILE: 'code.zip'
+    - step:
+        name: Update xDeliveryDeployScheduledReportsCrons Lambda code
+        script:
+          - pipe: atlassian/aws-lambda-deploy:0.2.1
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              FUNCTION_NAME: 'xDeliveryDeployScheduledReportsCrons'
+              COMMAND: 'update'
+              ZIP_FILE: 'code.zip'
+    - step:
+        name: Redeploy CloudWatch crons
+        script:
+          - apt-get update && apt-get install -y awscli
+          - aws --version
+          - aws lambda invoke --function-name xDeliveryDeployScheduledReportsCrons output.log && cat output.log
